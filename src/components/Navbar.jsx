@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react"; // Lucide icons (already included in shadcn setup or install via npm)
+import Logo from "../assets/Logo.png"
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,10 +17,16 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-600 text-white px-6 py-3 shadow-md sticky top-0 z-50">
       <div className="flex justify-between items-center">
-        {/* Logo */}
-        <h1 className="text-2xl font-bold">
-          <Link to="/">Solve HomeWork</Link>
-        </h1>
+         <Link to="/" className="flex items-center gap-2">
+          <img
+            src={Logo}
+            alt="HomeworkHub Logo"
+            className="w-20 h-20 object-contain"
+          />
+          <span className="text-2xl font-bold hidden sm:block">
+            HomeworkHub
+          </span>
+        </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6">
