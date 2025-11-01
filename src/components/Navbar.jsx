@@ -21,7 +21,7 @@ const Navbar = () => {
           <img
             src={Logo}
             alt="HomeworkHub Logo"
-            className="w-20 h-20 object-contain"
+            className="w-10 h-10 object-contain"
           />
           <span className="text-2xl font-bold hidden sm:block">
             HomeworkHub
