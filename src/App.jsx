@@ -1,36 +1,50 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./layout/Layout";
-import Contact from "./pages/Contact";
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import DashboardHome from "./pages/dashboard/DashboardHome";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
+
 import DashboardLayout from "./layout/DashboardLayout";
-import HomeworkList from "./pages/dashboard/HomeworkList";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import HomeworkPage from "./pages/dashboard/HomeworkPage";
 import Profile from "./pages/dashboard/Profile";
 
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-   <Routes>
-  {/* Main site routes */}
-  <Route path="/" element={<Layout />}>
-    <Route index element={<Home />} />
-    <Route path="login" element={<Login />} />
-    <Route path="register" element={<Register />} />
-    <Route path="contact" element={<Contact />} />
-    <Route path="about" element={<About />} />
-  </Route>
+    <Routes>
+      {/* Main site routes */}
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="about" element={<About />} />
+      </Route>
 
-  {/* Dashboard routes */}
-  <Route path="/dashboard" element={<DashboardLayout />}>
-  <Route index element={<DashboardHome />} />
-  <Route path="homework" element={<HomeworkList />} />
-  <Route path="profile" element={<Profile />} />
-</Route>
-</Routes>
+      {/* Dashboard routes with protection */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<DashboardHome />} />
+        <Route path="profile" element={<Profile />} />
+
+        {/* Homework Routes */}
+        <Route
+          path="homework/:type"
+          element={<HomeworkPage />}
+        />
+      </Route>
+    </Routes>
   );
 }
 
