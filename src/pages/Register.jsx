@@ -1,15 +1,36 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ fullName: "", email: "", password: "" });
+  const navigate = useNavigate(); // For redirect after registration
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Registered: ${form.name}`);
+
+    try {
+      const res = await axios.post(
+        "https://homeworksiteserver.onrender.com/api/auth/register",
+        form
+      );
+
+      alert(res.data.message); // Success message from backend
+
+      // Redirect to login page after registration
+      navigate("/login");
+    } catch (err) {
+      if (err.response && err.response.data) {
+        alert(err.response.data.message); // Show backend validation error
+      } else {
+        alert("Registration failed. Try again.");
+        console.error(err);
+      }
+    }
   };
 
   return (
@@ -18,11 +39,12 @@ const Register = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           type="text"
-          name="name"
+          name="fullName"
           placeholder="Full Name"
           className="border p-2 rounded"
           onChange={handleChange}
-          value={form.name}
+          value={form.fullName}
+          required
         />
         <input
           type="email"
@@ -31,6 +53,7 @@ const Register = () => {
           className="border p-2 rounded"
           onChange={handleChange}
           value={form.email}
+          required
         />
         <input
           type="password"
@@ -39,6 +62,7 @@ const Register = () => {
           className="border p-2 rounded"
           onChange={handleChange}
           value={form.password}
+          required
         />
         <button className="bg-yellow-500 text-black py-2 rounded hover:bg-yellow-400">
           Register
