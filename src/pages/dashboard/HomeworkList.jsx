@@ -14,7 +14,7 @@ const HomeworkList = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/api/user/homework", {
+        const res = await axios.get("https://homeworksiteserver.onrender.com/api/user/homework", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setHomework(res.data.homework || []); // expect backend returns { homework: [...] }
